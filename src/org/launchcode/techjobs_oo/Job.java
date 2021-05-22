@@ -22,7 +22,7 @@ public class Job {
         nextId++;
     }
 
-    public Job(String name, Employer employer, Location location, PositionType positionType, CoreCompetency coreCompetency, String value) {
+    public Job(String name, Employer employer, Location location, PositionType positionType, CoreCompetency coreCompetency) {
         this();
         this.name = name;
         this.employer = employer;
@@ -31,6 +31,7 @@ public class Job {
         this.coreCompetency = coreCompetency;
 
     }
+
 
     // TODO: Add custom equals and hashCode methods. Consider two Job objects "equal" when their id fields
     //  match.
@@ -46,6 +47,30 @@ public class Job {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        if (this.name.equals("") && this.employer.getValue().equals("") && this.location.getValue().equals("") && this.positionType.getValue().equals("") && this.coreCompetency.getValue().equals("")) {
+            return "OOPS! This job does not seem to exist.";
+        }
+        if (this.name.equals("")) {
+            this.name = "Data not available";
+        }
+        if (this.employer.getValue().equals("")) {
+            this.employer.setValue("Data not available");
+        }
+        if (this.location.getValue().equals("")) {
+            this.location.setValue("Data not available");
+        }
+        if (this.positionType.getValue().equals("")) {
+            this.positionType.setValue("Data not available");
+        }
+        if (this.coreCompetency.getValue().equals("")) {
+            this.coreCompetency.setValue("Data not available");
+        }
+
+            return "\nID: " + this.id + "\nName: " + this.name + "\nEmployer: " + this.employer.getValue() + "\nLocation: " + this.location.getValue() + "\nPosition Type: " + this.positionType.getValue() + "\nCore Competency: " + this.coreCompetency.getValue() + "\n ";
     }
 
 

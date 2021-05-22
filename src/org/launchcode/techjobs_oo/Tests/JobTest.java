@@ -1,18 +1,63 @@
 package org.launchcode.techjobs_oo.Tests;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.launchcode.techjobs_oo.Job;
+import org.launchcode.techjobs_oo.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
 public class JobTest {
-    @Before
 
     @Test
     public void testSettingJobId() {
-       Job test_job_a = new Job();
-       Job test_job_b = new Job();
-        assertEquals(test_job_a.getId(), test_job_b.getId()-1, .001);
+       Job testJobA = new Job();
+       Job testJobB = new Job();
+
+       assertEquals(testJobA.getId(), testJobB.getId()-1, .001);
     }
+
+    @Test
+    public void testJobConstructorSetsAllFields() {
+        Job test_job_constructor = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+
+        assertTrue(test_job_constructor instanceof Job);
+    }
+
+    @Test
+    public void testJobsForEquality() {
+        Job testIdEquality1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        Job tesIdEquality2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+
+        Assert.assertFalse(testIdEquality1.getId() == tesIdEquality2.getId());
+    }
+
+    @Test
+    public void testToStringMethod() {
+        Job testToString = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        Job testToString2 = new Job("", new Employer(""), new Location(""), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        Job testToString3 = new Job("", new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
+
+        String[] stringArray = testToString.toString().split("\\n");
+        String[] stringArray2 = testToString2.toString().split("\\n");
+//First requirement:
+        assertEquals(stringArray[0], "");
+        assertEquals(stringArray[7], " ");
+//Second requirement:
+        assertEquals(stringArray[1], "ID: " + testToString.getId());
+        assertEquals(stringArray[2], "Name: " + testToString.getName());
+        assertEquals(stringArray[3], "Employer: " + testToString.getEmployer());
+        assertEquals(stringArray[4], "Location: " + testToString.getLocation());
+        assertEquals(stringArray[5], "Position Type: " + testToString.getPositionType());
+        assertEquals(stringArray[6], "Core Competency: " + testToString.getCoreCompetency());
+//Third requirement:
+        assertEquals(stringArray2[2], "Name: Data not available");
+        assertEquals(stringArray2[3], "Employer: Data not available");
+        assertEquals(stringArray2[4], "Location: Data not available");
+//Fourth requirement (Bonus):
+        assertEquals(testToString3.toString(), "OOPS! This job does not seem to exist.");
+
+    }
+
 
 }
